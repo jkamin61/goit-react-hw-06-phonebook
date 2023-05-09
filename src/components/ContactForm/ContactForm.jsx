@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const ContactForm = ({ onAddContact }) => {
-
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -13,7 +12,6 @@ const ContactForm = ({ onAddContact }) => {
   const handleNumberChange = event => {
     setNumber(event.target.value);
   };
-
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -57,8 +55,8 @@ const ContactForm = ({ onAddContact }) => {
       </form>
     </div>
   );
-
 };
+
 ContactForm.propTypes = {
   onAddContact: PropTypes.func.isRequired,
 };
