@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
-import { addContact, deleteContact } from './redux/contactsSlice';
+import { addContact, deleteContact, setContacts } from './redux/contactsSlice';
 import { changeFilter } from './redux/filterSlice';
 
 export const App = () => {
@@ -13,13 +13,15 @@ export const App = () => {
   const filter = useSelector((state) => state.filter);
 
   useEffect(() => {
-    const storedContacts = localStorage.getItem('Contacts');
-    const parsedContacts = JSON.parse(storedContacts);
-    if (Array.isArray(parsedContacts)) {
-      dispatch(addContact(parsedContacts));
+    const savedContacts = JSON.parse(localStorage.getItem('contacts')) || [];
+    if (savedContacts.length) {
+      dispatch(setContacts(savedContacts));
     }
-    localStorage.setItem('Contacts', JSON.stringify(parsedContacts));
   }, [dispatch]);
+
+  useEffect(() => {
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const handleAddContact = (name, number) => {
     const duplicateName = contacts.find((contact) => contact.name === name);
